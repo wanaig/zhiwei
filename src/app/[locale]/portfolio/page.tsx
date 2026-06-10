@@ -1,131 +1,223 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useTranslations } from "next-intl";
-import { motion, useReducedMotion, AnimatePresence } from "motion/react";
 import Link from "next/link";
 import { ArrowUpRight } from "@phosphor-icons/react";
 
-const darkBg = "rgb(6, 6, 10)";
-const darkSurface = "rgba(255,255,255,0.02)";
-const border = "rgba(255,255,255,0.06)";
-
 const projects = [
-  { id: 1, title: "企业官网重构", category: "website", image: "https://picsum.photos/seed/zw-p1/800/600", tags: ["Next.js", "Tailwind", "TypeScript"], description: "为某科技公司重新设计的响应式官网，性能提升200%" },
-  { id: 2, title: "电商平台开发", category: "ecommerce", image: "https://picsum.photos/seed/zw-p2/800/600", tags: ["React", "Node.js", "PostgreSQL"], description: "全功能电商平台，包含商品管理、订单系统、支付集成" },
-  { id: 3, title: "AI数据分析系统", category: "ai", image: "https://picsum.photos/seed/zw-p3/800/600", tags: ["Python", "TensorFlow", "FastAPI"], description: "基于机器学习的数据分析平台，自动生成业务洞察报告" },
-  { id: 4, title: "移动端App", category: "app", image: "https://picsum.photos/seed/zw-p4/800/600", tags: ["React Native", "Firebase"], description: "跨平台移动应用，支持iOS和Android，用户超过10万" },
-  { id: 5, title: "微信小程序", category: "miniapp", image: "https://picsum.photos/seed/zw-p5/800/600", tags: ["微信原生", "云开发"], description: "社区服务小程序，日活用户5000+" },
-  { id: 6, title: "后台管理系统", category: "system", image: "https://picsum.photos/seed/zw-p6/800/600", tags: ["Vue.js", "Element Plus", "Java"], description: "企业级后台管理系统，支持多角色权限控制" },
+  { id: 1, title: "企业官网重构", category: "website", year: "2024", image: "https://picsum.photos/seed/zw-grid1/800/1000", tags: ["Next.js", "Tailwind"], color: "#c83246" },
+  { id: 2, title: "电商平台开发", category: "ecommerce", year: "2024", image: "https://picsum.photos/seed/zw-grid2/800/600", tags: ["React", "Node.js"], color: "#3a7bd5" },
+  { id: 3, title: "AI数据分析系统", category: "ai", year: "2023", image: "https://picsum.photos/seed/zw-grid3/800/800", tags: ["Python", "TensorFlow"], color: "#2db89a" },
+  { id: 4, title: "移动端App", category: "app", year: "2023", image: "https://picsum.photos/seed/zw-grid4/800/1000", tags: ["React Native"], color: "#9b59b6" },
+  { id: 5, title: "微信小程序", category: "miniapp", year: "2024", image: "https://picsum.photos/seed/zw-grid5/800/600", tags: ["微信原生"], color: "#07c160" },
+  { id: 6, title: "后台管理系统", category: "system", year: "2023", image: "https://picsum.photos/seed/zw-grid6/800/800", tags: ["Vue.js", "Java"], color: "#e67e22" },
 ];
 
 const filterKeys = ["all", "website", "app", "system", "miniapp", "ai", "ecommerce"] as const;
 
 export default function PortfolioPage() {
   const t = useTranslations("portfolio");
-  const reduce = useReducedMotion();
   const [activeFilter, setActiveFilter] = useState<string>("all");
+  const [hoveredId, setHoveredId] = useState<number | null>(null);
 
   const filteredProjects = activeFilter === "all" ? projects : projects.filter((p) => p.category === activeFilter);
 
   return (
-    <section className="py-24 md:py-32" style={{ backgroundColor: darkBg }}>
-      <div className="max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-12">
+    <section className="min-h-screen" style={{ backgroundColor: "rgb(6, 6, 10)" }}>
+      <div className="max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-12 py-24 md:py-32">
+        {/* Header */}
         <div className="mb-16">
-          <motion.h1
-            initial={reduce ? false : { opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 1.1, color: "white" }}
-          >
+          <div className="text-xs font-medium tracking-[0.2em] uppercase mb-4" style={{ color: "rgb(200, 80, 100)" }}>
+            Portfolio
+          </div>
+          <h1 style={{ fontSize: "clamp(3rem, 8vw, 6rem)", fontWeight: 900, letterSpacing: "-0.06em", lineHeight: 0.9, color: "white" }}>
             {t("title")}
-          </motion.h1>
-          <motion.p
-            initial={reduce ? false : { opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-4 text-lg max-w-[40ch]"
-            style={{ color: "rgba(255,255,255,0.4)" }}
-          >
+          </h1>
+          <p className="mt-5 text-lg max-w-[40ch]" style={{ color: "rgba(255,255,255,0.35)" }}>
             {t("subtitle")}
-          </motion.p>
+          </p>
         </div>
 
         {/* Filters */}
-        <motion.div
-          initial={reduce ? false : { opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-wrap gap-2 mb-12"
-        >
+        <div className="flex flex-wrap gap-2 mb-12">
           {filterKeys.map((filter) => (
             <button
               key={filter}
               onClick={() => setActiveFilter(filter)}
-              className="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200"
+              className="px-5 py-2.5 text-sm font-medium rounded-full transition-all duration-300"
               style={{
-                backgroundColor: activeFilter === filter ? "rgb(200, 50, 70)" : darkSurface,
+                backgroundColor: activeFilter === filter ? "rgb(200, 50, 70)" : "transparent",
                 color: activeFilter === filter ? "white" : "rgba(255,255,255,0.4)",
-                border: activeFilter === filter ? "1px solid rgb(200, 50, 70)" : `1px solid ${border}`,
+                border: activeFilter === filter ? "none" : "1px solid rgba(255,255,255,0.1)",
               }}
             >
               {t(`filters.${filter}`)}
             </button>
           ))}
-        </motion.div>
+        </div>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <AnimatePresence mode="popLayout">
-            {filteredProjects.map((project, index) => (
-              <motion.div
-                key={project.id}
-                layout
-                initial={reduce ? false : { opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.4, delay: index * 0.05, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <Link
-                  href={`/portfolio/${project.id}`}
-                  className="group block rounded-xl overflow-hidden transition-all duration-400 hover:translate-y-[-4px]"
-                  style={{ backgroundColor: darkSurface, border: `1px solid ${border}` }}
-                >
-                  <div className="aspect-[4/3] overflow-hidden">
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      style={{ filter: "brightness(0.75) contrast(1.1)" }}
-                      loading="lazy"
-                    />
-                  </div>
-                  <div className="p-5">
-                    <div className="flex items-center gap-2 mb-3">
-                      <span className="text-xs font-semibold px-2.5 py-1 rounded uppercase tracking-wider" style={{ backgroundColor: "rgba(200, 50, 70, 0.15)", color: "rgb(200, 100, 120)" }}>
-                        {project.category}
-                      </span>
-                    </div>
-                    <h3 className="text-lg font-semibold mb-2 group-hover:text-[rgb(200,80,100)] transition-colors duration-300" style={{ color: "white" }}>
-                      {project.title}
-                    </h3>
-                    <p className="text-sm mb-4 line-clamp-2" style={{ color: "rgba(255,255,255,0.35)" }}>
-                      {project.description}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {project.tags.map((tag) => (
-                        <span key={tag} className="px-2.5 py-1 text-xs rounded" style={{ backgroundColor: "rgba(255,255,255,0.04)", color: "rgba(255,255,255,0.35)", border: `1px solid ${border}` }}>
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
-          </AnimatePresence>
+        {/* Masonry Grid */}
+        <div className="columns-1 md:columns-2 lg:columns-3 gap-4 space-y-4">
+          {filteredProjects.map((project, index) => (
+            <MasonryCard
+              key={project.id}
+              project={project}
+              index={index}
+              isHovered={hoveredId === project.id}
+              onHover={() => setHoveredId(project.id)}
+              onLeave={() => setHoveredId(null)}
+            />
+          ))}
         </div>
       </div>
     </section>
+  );
+}
+
+function MasonryCard({
+  project,
+  index,
+  isHovered,
+  onHover,
+  onLeave,
+}: {
+  project: (typeof projects)[number];
+  index: number;
+  isHovered: boolean;
+  onHover: () => void;
+  onLeave: () => void;
+}) {
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setIsVisible(true);
+      },
+      { threshold: 0.1 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  // Vary aspect ratios for visual interest
+  const aspectRatios = ["4/5", "3/4", "1/1", "4/5", "3/4", "1/1"];
+  const aspectRatio = aspectRatios[index % aspectRatios.length];
+
+  return (
+    <div
+      ref={ref}
+      className="break-inside-avoid"
+      style={{
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? "translateY(0) scale(1)" : "translateY(30px) scale(0.95)",
+        transition: `all 0.7s cubic-bezier(0.16, 1, 0.3, 1) ${index * 0.08}s`,
+      }}
+    >
+      <Link
+        href={`/portfolio/${project.id}`}
+        className="group block relative overflow-hidden rounded-xl"
+        style={{
+          border: `1px solid ${isHovered ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.04)"}`,
+          transition: "all 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
+          transform: isHovered ? "translateY(-6px)" : "translateY(0)",
+        }}
+        onMouseEnter={onHover}
+        onMouseLeave={onLeave}
+      >
+        {/* Image */}
+        <div className="relative overflow-hidden" style={{ aspectRatio }}>
+          <img
+            src={project.image}
+            alt={project.title}
+            className="w-full h-full object-cover transition-all duration-700"
+            style={{
+              filter: isHovered ? "brightness(0.7) contrast(1.1) saturate(1.1)" : "brightness(0.85) contrast(1.05)",
+              transform: isHovered ? "scale(1.08)" : "scale(1)",
+            }}
+            loading="lazy"
+          />
+
+          {/* Gradient overlay */}
+          <div
+            className="absolute inset-0 transition-opacity duration-500"
+            style={{
+              background: `linear-gradient(to top, ${project.color}cc 0%, ${project.color}33 40%, transparent 100%)`,
+              opacity: isHovered ? 1 : 0,
+            }}
+          />
+
+          {/* Dark overlay */}
+          <div
+            className="absolute inset-0 transition-opacity duration-500"
+            style={{
+              background: "linear-gradient(to top, rgba(6,6,10,0.9) 0%, rgba(6,6,10,0.3) 50%, transparent 100%)",
+              opacity: isHovered ? 1 : 0.4,
+            }}
+          />
+
+          {/* Top right arrow */}
+          <div
+            className="absolute top-4 right-4 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-400"
+            style={{
+              backgroundColor: isHovered ? "white" : "rgba(255,255,255,0.1)",
+              color: isHovered ? "rgb(6,6,10)" : "rgba(255,255,255,0.6)",
+              transform: isHovered ? "scale(1) rotate(0)" : "scale(0.7) rotate(-45deg)",
+              opacity: isHovered ? 1 : 0,
+            }}
+          >
+            <ArrowUpRight size={16} weight="bold" />
+          </div>
+
+          {/* Bottom content */}
+          <div className="absolute bottom-0 left-0 right-0 p-5 md:p-6">
+            {/* Category + Year */}
+            <div className="flex items-center gap-2 mb-2">
+              <span
+                className="text-xs font-semibold uppercase tracking-wider transition-colors duration-300"
+                style={{ color: isHovered ? "white" : "rgba(255,255,255,0.5)" }}
+              >
+                {project.category}
+              </span>
+              <span className="text-xs" style={{ color: "rgba(255,255,255,0.3)" }}>
+                {project.year}
+              </span>
+            </div>
+
+            {/* Title */}
+            <h3
+              className="text-lg md:text-xl font-bold transition-colors duration-300"
+              style={{ color: isHovered ? "white" : "rgba(255,255,255,0.8)" }}
+            >
+              {project.title}
+            </h3>
+
+            {/* Tags */}
+            <div
+              className="flex flex-wrap gap-1.5 mt-3 transition-all duration-400"
+              style={{
+                opacity: isHovered ? 1 : 0,
+                transform: isHovered ? "translateY(0)" : "translateY(10px)",
+              }}
+            >
+              {project.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="text-xs px-2 py-1 rounded"
+                  style={{
+                    backgroundColor: "rgba(255,255,255,0.15)",
+                    color: "rgba(255,255,255,0.8)",
+                  }}
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </Link>
+    </div>
   );
 }
