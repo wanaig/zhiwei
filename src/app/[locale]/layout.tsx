@@ -54,21 +54,10 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html
-      lang={locale}
-      data-scroll-behavior="smooth"
-      className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-    >
-      <body
-        className="min-h-dvh flex flex-col"
-        suppressHydrationWarning
-      >
-        <NextIntlClientProvider messages={messages}>
-          <Header />
-          <main className="flex-1 overflow-x-hidden w-full max-w-full">{children}</main>
-          <Footer />
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <NextIntlClientProvider messages={messages}>
+      <Header />
+      <main className="flex-1 overflow-x-hidden w-full max-w-full">{children}</main>
+      <Footer />
+    </NextIntlClientProvider>
   );
 }

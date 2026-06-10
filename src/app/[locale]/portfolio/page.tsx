@@ -3,15 +3,16 @@
 import { useState, useRef, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { ArrowUpRight } from "@phosphor-icons/react";
+import { ArrowUpRight, Funnel } from "@phosphor-icons/react";
+import PortfolioHero from "@/components/home/PortfolioHero";
 
 const projects = [
-  { id: 1, title: "企业官网重构", category: "website", year: "2024", image: "https://picsum.photos/seed/zw-grid1/800/1000", tags: ["Next.js", "Tailwind"], color: "#c83246" },
-  { id: 2, title: "电商平台开发", category: "ecommerce", year: "2024", image: "https://picsum.photos/seed/zw-grid2/800/600", tags: ["React", "Node.js"], color: "#3a7bd5" },
-  { id: 3, title: "AI数据分析系统", category: "ai", year: "2023", image: "https://picsum.photos/seed/zw-grid3/800/800", tags: ["Python", "TensorFlow"], color: "#2db89a" },
-  { id: 4, title: "移动端App", category: "app", year: "2023", image: "https://picsum.photos/seed/zw-grid4/800/1000", tags: ["React Native"], color: "#9b59b6" },
-  { id: 5, title: "微信小程序", category: "miniapp", year: "2024", image: "https://picsum.photos/seed/zw-grid5/800/600", tags: ["微信原生"], color: "#07c160" },
-  { id: 6, title: "后台管理系统", category: "system", year: "2023", image: "https://picsum.photos/seed/zw-grid6/800/800", tags: ["Vue.js", "Java"], color: "#e67e22" },
+  { id: 1, title: "企业官网重构", category: "website", year: "2026", image: "https://picsum.photos/seed/zw-port1/1200/800", tags: ["Next.js", "Tailwind", "TypeScript"], color: "#c83246" },
+  { id: 2, title: "电商平台开发", category: "ecommerce", year: "2026", image: "https://picsum.photos/seed/zw-port2/1200/800", tags: ["React", "Node.js", "PostgreSQL"], color: "#3a7bd5" },
+  { id: 3, title: "AI数据分析系统", category: "ai", year: "2026", image: "https://picsum.photos/seed/zw-port3/1200/800", tags: ["Python", "TensorFlow", "FastAPI"], color: "#2db89a" },
+  { id: 4, title: "移动端App", category: "app", year: "2026", image: "https://picsum.photos/seed/zw-port4/1200/800", tags: ["React Native", "Firebase"], color: "#9b59b6" },
+  { id: 5, title: "微信小程序", category: "miniapp", year: "2026", image: "https://picsum.photos/seed/zw-port5/1200/800", tags: ["微信原生", "云开发"], color: "#07c160" },
+  { id: 6, title: "后台管理系统", category: "system", year: "2026", image: "https://picsum.photos/seed/zw-port6/1200/800", tags: ["Vue.js", "Element Plus", "Java"], color: "#e67e22" },
 ];
 
 const filterKeys = ["all", "website", "app", "system", "miniapp", "ai", "ecommerce"] as const;
@@ -19,55 +20,50 @@ const filterKeys = ["all", "website", "app", "system", "miniapp", "ai", "ecommer
 export default function PortfolioPage() {
   const t = useTranslations("portfolio");
   const [activeFilter, setActiveFilter] = useState<string>("all");
-  const [hoveredId, setHoveredId] = useState<number | null>(null);
+  const [scrollProgress, setScrollProgress] = useState(1); // Start with 1
 
   const filteredProjects = activeFilter === "all" ? projects : projects.filter((p) => p.category === activeFilter);
 
   return (
-    <section className="min-h-screen" style={{ backgroundColor: "rgb(6, 6, 10)" }}>
-      <div className="max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-12 py-24 md:py-32">
-        {/* Header */}
-        <div className="mb-16">
-          <div className="text-xs font-medium tracking-[0.2em] uppercase mb-4" style={{ color: "rgb(200, 80, 100)" }}>
-            Portfolio
-          </div>
-          <h1 style={{ fontSize: "clamp(3rem, 8vw, 6rem)", fontWeight: 900, letterSpacing: "-0.06em", lineHeight: 0.9, color: "white" }}>
-            {t("title")}
-          </h1>
-          <p className="mt-5 text-lg max-w-[40ch]" style={{ color: "rgba(255,255,255,0.35)" }}>
-            {t("subtitle")}
-          </p>
-        </div>
+    <section style={{ backgroundColor: "rgb(6, 6, 10)" }}>
+      <PortfolioHero />
 
-        {/* Filters */}
-        <div className="flex flex-wrap gap-2 mb-12">
+      {/* Filters */}
+      <div
+        className="max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-12 mb-12 pt-12"
+        style={{
+          opacity: 1,
+          transform: "none",
+        }}
+      >
+        <div className="flex items-center gap-3 mb-4">
+          <Funnel size={16} style={{ color: "rgba(255,255,255,0.3)" }} />
+          <span className="text-sm" style={{ color: "rgba(255,255,255,0.3)" }}>筛选项目</span>
+        </div>
+        <div className="flex flex-wrap gap-2">
           {filterKeys.map((filter) => (
             <button
               key={filter}
               onClick={() => setActiveFilter(filter)}
-              className="px-5 py-2.5 text-sm font-medium rounded-full transition-all duration-300"
+              className="px-5 py-2.5 text-sm font-medium rounded-full transition-all duration-400 hover:scale-105"
               style={{
                 backgroundColor: activeFilter === filter ? "rgb(200, 50, 70)" : "transparent",
                 color: activeFilter === filter ? "white" : "rgba(255,255,255,0.4)",
                 border: activeFilter === filter ? "none" : "1px solid rgba(255,255,255,0.1)",
+                boxShadow: activeFilter === filter ? "0 4px 20px rgba(200, 50, 70, 0.3)" : "none",
               }}
             >
               {t(`filters.${filter}`)}
             </button>
           ))}
         </div>
+      </div>
 
-        {/* Masonry Grid */}
-        <div className="columns-1 md:columns-2 lg:columns-3 gap-4 space-y-4">
+      {/* Projects */}
+      <div className="max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-12 pb-24 md:pb-32">
+        <div className="space-y-6">
           {filteredProjects.map((project, index) => (
-            <MasonryCard
-              key={project.id}
-              project={project}
-              index={index}
-              isHovered={hoveredId === project.id}
-              onHover={() => setHoveredId(project.id)}
-              onLeave={() => setHoveredId(null)}
-            />
+            <ProjectRow key={project.id} project={project} index={index} />
           ))}
         </div>
       </div>
@@ -75,145 +71,133 @@ export default function PortfolioPage() {
   );
 }
 
-function MasonryCard({
-  project,
-  index,
-  isHovered,
-  onHover,
-  onLeave,
-}: {
-  project: (typeof projects)[number];
-  index: number;
-  isHovered: boolean;
-  onHover: () => void;
-  onLeave: () => void;
-}) {
+function ProjectRow({ project, index }: { project: typeof projects[0]; index: number }) {
   const [isVisible, setIsVisible] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setIsVisible(true);
-      },
-      { threshold: 0.1 }
+      ([entry]) => { if (entry.isIntersecting) setIsVisible(true); },
+      { threshold: 0.1, rootMargin: "50px" }
     );
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
   }, []);
 
-  // Vary aspect ratios for visual interest
-  const aspectRatios = ["4/5", "3/4", "1/1", "4/5", "3/4", "1/1"];
-  const aspectRatio = aspectRatios[index % aspectRatios.length];
-
   return (
     <div
       ref={ref}
-      className="break-inside-avoid"
       style={{
         opacity: isVisible ? 1 : 0,
-        transform: isVisible ? "translateY(0) scale(1)" : "translateY(30px) scale(0.95)",
-        transition: `all 0.7s cubic-bezier(0.16, 1, 0.3, 1) ${index * 0.08}s`,
+        transform: isVisible ? "translateY(0)" : "translateY(30px)",
+        transition: `all 0.5s ease-out ${index * 0.08}s`,
       }}
     >
       <Link
         href={`/portfolio/${project.id}`}
-        className="group block relative overflow-hidden rounded-xl"
+        className="group block rounded-2xl overflow-hidden relative"
         style={{
-          border: `1px solid ${isHovered ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.04)"}`,
-          transition: "all 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
-          transform: isHovered ? "translateY(-6px)" : "translateY(0)",
+          backgroundColor: isHovered ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.02)",
+          border: `1px solid ${isHovered ? `${project.color}40` : "rgba(255,255,255,0.05)"}`,
+          transition: "border-color 0.3s ease, background-color 0.3s ease",
         }}
-        onMouseEnter={onHover}
-        onMouseLeave={onLeave}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
-        {/* Image */}
-        <div className="relative overflow-hidden" style={{ aspectRatio }}>
-          <img
-            src={project.image}
-            alt={project.title}
-            className="w-full h-full object-cover transition-all duration-700"
-            style={{
-              filter: isHovered ? "brightness(0.7) contrast(1.1) saturate(1.1)" : "brightness(0.85) contrast(1.05)",
-              transform: isHovered ? "scale(1.08)" : "scale(1)",
-            }}
-            loading="lazy"
-          />
-
-          {/* Gradient overlay */}
-          <div
-            className="absolute inset-0 transition-opacity duration-500"
-            style={{
-              background: `linear-gradient(to top, ${project.color}cc 0%, ${project.color}33 40%, transparent 100%)`,
-              opacity: isHovered ? 1 : 0,
-            }}
-          />
-
-          {/* Dark overlay */}
-          <div
-            className="absolute inset-0 transition-opacity duration-500"
-            style={{
-              background: "linear-gradient(to top, rgba(6,6,10,0.9) 0%, rgba(6,6,10,0.3) 50%, transparent 100%)",
-              opacity: isHovered ? 1 : 0.4,
-            }}
-          />
-
-          {/* Top right arrow */}
-          <div
-            className="absolute top-4 right-4 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-400"
-            style={{
-              backgroundColor: isHovered ? "white" : "rgba(255,255,255,0.1)",
-              color: isHovered ? "rgb(6,6,10)" : "rgba(255,255,255,0.6)",
-              transform: isHovered ? "scale(1) rotate(0)" : "scale(0.7) rotate(-45deg)",
-              opacity: isHovered ? 1 : 0,
-            }}
-          >
-            <ArrowUpRight size={16} weight="bold" />
-          </div>
-
-          {/* Bottom content */}
-          <div className="absolute bottom-0 left-0 right-0 p-5 md:p-6">
-            {/* Category + Year */}
-            <div className="flex items-center gap-2 mb-2">
-              <span
-                className="text-xs font-semibold uppercase tracking-wider transition-colors duration-300"
-                style={{ color: isHovered ? "white" : "rgba(255,255,255,0.5)" }}
-              >
-                {project.category}
-              </span>
-              <span className="text-xs" style={{ color: "rgba(255,255,255,0.3)" }}>
-                {project.year}
-              </span>
-            </div>
-
-            {/* Title */}
-            <h3
-              className="text-lg md:text-xl font-bold transition-colors duration-300"
-              style={{ color: isHovered ? "white" : "rgba(255,255,255,0.8)" }}
-            >
-              {project.title}
-            </h3>
-
-            {/* Tags */}
-            <div
-              className="flex flex-wrap gap-1.5 mt-3 transition-all duration-400"
+        <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
+          {/* Image */}
+          <div className="lg:col-span-5 relative aspect-[16/10] lg:aspect-auto overflow-hidden">
+            <img
+              src={project.image}
+              alt={project.title}
+              className="w-full h-full object-cover transition-all duration-500"
               style={{
+                filter: isHovered ? "brightness(0.8) contrast(1.1)" : "brightness(0.65)",
+                transform: isHovered ? "scale(1.05)" : "scale(1)",
+              }}
+              loading="lazy"
+            />
+            {/* Color overlay */}
+            <div
+              className="absolute inset-0 transition-opacity duration-300"
+              style={{
+                background: `linear-gradient(135deg, ${project.color}30, transparent)`,
                 opacity: isHovered ? 1 : 0,
-                transform: isHovered ? "translateY(0)" : "translateY(10px)",
+              }}
+            />
+            {/* Arrow */}
+            <div
+              className="absolute bottom-4 right-4 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300"
+              style={{
+                backgroundColor: isHovered ? project.color : "rgba(255,255,255,0.1)",
+                color: isHovered ? "white" : "rgba(255,255,255,0.4)",
+                opacity: isHovered ? 1 : 0,
+                transform: isHovered ? "scale(1)" : "scale(0.8)",
               }}
             >
-              {project.tags.map((tag) => (
+              <ArrowUpRight size={18} weight="bold" />
+            </div>
+          </div>
+
+          {/* Content */}
+          <div className="lg:col-span-7 p-6 lg:p-8 flex items-center">
+            <div className="flex-1">
+              {/* Number + Category */}
+              <div className="flex items-center gap-4 mb-4">
                 <span
-                  key={tag}
-                  className="text-xs px-2 py-1 rounded"
+                  className="text-xs font-mono"
+                  style={{ color: isHovered ? project.color : "rgba(255,255,255,0.15)" }}
+                >
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <span
+                  className="text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full"
                   style={{
-                    backgroundColor: "rgba(255,255,255,0.15)",
-                    color: "rgba(255,255,255,0.8)",
+                    backgroundColor: isHovered ? `${project.color}20` : "rgba(255,255,255,0.04)",
+                    color: isHovered ? project.color : "rgba(255,255,255,0.3)",
+                    border: `1px solid ${isHovered ? `${project.color}30` : "rgba(255,255,255,0.06)"}`,
                   }}
                 >
-                  {tag}
+                  {project.category}
                 </span>
-              ))}
+                <span className="text-xs" style={{ color: "rgba(255,255,255,0.2)" }}>
+                  {project.year}
+                </span>
+              </div>
+
+              {/* Title */}
+              <h3
+                className="text-xl lg:text-2xl font-bold mb-4 transition-colors duration-300"
+                style={{ color: isHovered ? "white" : "rgba(255,255,255,0.7)" }}
+              >
+                {project.title}
+              </h3>
+
+              {/* Tags */}
+              <div className="flex flex-wrap gap-2">
+                {project.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="px-3 py-1.5 text-xs rounded-lg transition-all duration-300"
+                    style={{
+                      backgroundColor: isHovered ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.03)",
+                      color: isHovered ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.25)",
+                      border: `1px solid ${isHovered ? "rgba(255,255,255,0.1)" : "rgba(255,255,255,0.04)"}`,
+                    }}
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Large number */}
+            <div
+              className="hidden lg:block text-7xl font-bold transition-colors duration-500"
+              style={{ color: isHovered ? `${project.color}15` : "rgba(255,255,255,0.02)" }}
+            >
+              {String(index + 1).padStart(2, "0")}
             </div>
           </div>
         </div>

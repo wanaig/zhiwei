@@ -3,7 +3,8 @@
 import { useRef, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { Globe, DeviceMobile, Database, DeviceTablet, Brain, ShoppingCart, ArrowUpRight } from "@phosphor-icons/react";
+import { Globe, DeviceMobile, Database, DeviceTablet, Brain, ShoppingCart, ArrowUpRight, Sparkle } from "@phosphor-icons/react";
+import ServicesHero from "@/components/home/ServicesHero";
 
 const services = [
   { key: "website", icon: Globe, color: "#c83246" },
@@ -25,22 +26,40 @@ const features: Record<string, string[]> = {
 
 export default function ServicesPage() {
   const t = useTranslations("services");
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!sectionRef.current) return;
+      const rect = sectionRef.current.getBoundingClientRect();
+      const progress = 1 - (rect.top / window.innerHeight);
+      setScrollProgress(Math.max(0, Math.min(1, progress)));
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <section style={{ backgroundColor: "rgb(6, 6, 10)" }}>
-      {/* Header */}
-      <div className="max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-12 pt-24 md:pt-32 pb-16">
-        <ScrollReveal>
-          <div className="text-xs font-medium tracking-[0.2em] uppercase mb-4" style={{ color: "rgb(200, 80, 100)" }}>
-            Services
-          </div>
-          <h1 style={{ fontSize: "clamp(3rem, 8vw, 5rem)", fontWeight: 900, letterSpacing: "-0.06em", lineHeight: 0.9, color: "white" }}>
-            {t("title")}
-          </h1>
-          <p className="mt-5 text-lg max-w-[40ch]" style={{ color: "rgba(255,255,255,0.35)" }}>
-            {t("subtitle")}
-          </p>
-        </ScrollReveal>
+    <section ref={sectionRef} style={{ backgroundColor: "rgb(6, 6, 10)" }}>
+      <ServicesHero />
+
+      {/* Services intro */}
+      <div
+        className="max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-12 py-16"
+        style={{
+          opacity: Math.min(1, Math.max(0, (scrollProgress - 0.1) * 5)),
+          transform: `translateY(${Math.max(0, (0.3 - scrollProgress) * 40)}px)`,
+        }}
+      >
+        <div className="flex items-center gap-3 mb-4">
+          <Sparkle size={16} style={{ color: "rgb(200, 80, 100)" }} />
+          <span className="text-sm font-medium" style={{ color: "rgb(200, 80, 100)" }}>我们的服务</span>
+        </div>
+        <p className="text-lg max-w-[60ch]" style={{ color: "rgba(255,255,255,0.35)" }}>
+          从网站到应用，从系统到AI，我们提供全方位的数字化解决方案
+        </p>
       </div>
 
       {/* Services list - each is a full section */}
@@ -55,38 +74,6 @@ export default function ServicesPage() {
         />
       ))}
     </section>
-  );
-}
-
-function ScrollReveal({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [progress, setProgress] = useState(0);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setProgress(entry.intersectionRatio);
-        }
-      },
-      { threshold: Array.from({ length: 20 }, (_, i) => i / 20) }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <div
-      ref={ref}
-      className={className}
-      style={{
-        opacity: Math.min(1, progress * 3),
-        transform: `translateY(${(1 - Math.min(1, progress * 2)) * 40}px)`,
-        transition: "opacity 0.3s ease-out, transform 0.3s ease-out",
-      }}
-    >
-      {children}
-    </div>
   );
 }
 
@@ -105,6 +92,7 @@ function ServiceSection({
 }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -130,13 +118,15 @@ function ServiceSection({
         minHeight: "80vh",
         borderTop: "1px solid rgba(255,255,255,0.04)",
       }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       {/* Background color shift */}
       <div
         className="absolute inset-0 transition-opacity duration-700"
         style={{
-          background: `radial-gradient(ellipse at ${isEven ? "30%" : "70%"} 50%, ${color}06, transparent 60%)`,
-          opacity: scrollProgress,
+          background: `radial-gradient(ellipse at ${isEven ? "30%" : "70%"} 50%, ${color}08, transparent 60%)`,
+          opacity: scrollProgress * (isHovered ? 1.5 : 1),
         }}
       />
 
@@ -155,6 +145,26 @@ function ServiceSection({
         }}
       />
 
+      {/* Floating particles */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {[...Array(8)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute rounded-full"
+            style={{
+              width: `${4 + i * 2}px`,
+              height: `${4 + i * 2}px`,
+              backgroundColor: `${color}20`,
+              left: `${10 + (i * 12) % 80}%`,
+              top: `${20 + (i * 15) % 60}%`,
+              transform: `translate(${Math.sin(scrollProgress * Math.PI + i) * 30}px, ${Math.cos(scrollProgress * Math.PI + i) * 20}px)`,
+              opacity: scrollProgress * 0.6,
+              transition: "transform 0.3s ease-out",
+            }}
+          />
+        ))}
+      </div>
+
       {/* Content */}
       <div className="max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-12 py-20 md:py-28 relative z-10">
         <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${isEven ? "" : "lg:direction-rtl"}`}>
@@ -168,7 +178,7 @@ function ServiceSection({
             }}
           >
             <div
-              className="aspect-square rounded-2xl relative overflow-hidden"
+              className="aspect-square rounded-2xl relative overflow-hidden group"
               style={{
                 backgroundColor: "rgba(255,255,255,0.02)",
                 border: `1px solid ${color}15`,
@@ -176,29 +186,36 @@ function ServiceSection({
             >
               {/* Animated gradient */}
               <div
-                className="absolute inset-0"
+                className="absolute inset-0 transition-transform duration-700"
                 style={{
                   background: `
-                    radial-gradient(circle at 30% 30%, ${color}12, transparent 50%),
+                    radial-gradient(circle at 30% 30%, ${color}15, transparent 50%),
                     radial-gradient(circle at 70% 70%, ${color}08, transparent 50%)
                   `,
-                  transform: `rotate(${scrollProgress * 10}deg)`,
-                  transition: "transform 0.1s",
+                  transform: `rotate(${scrollProgress * 10}deg) scale(${isHovered ? 1.1 : 1})`,
                 }}
               />
 
               {/* Icon */}
               <div className="absolute inset-0 flex items-center justify-center">
                 <div
+                  className="transition-transform duration-500"
                   style={{
                     transform: `scale(${0.8 + scrollProgress * 0.3}) rotate(${scrollProgress * -5}deg)`,
-                    transition: "transform 0.1s",
                   }}
                 >
-                  <Icon size={100} weight="duotone" style={{ color, opacity: 0.25 + scrollProgress * 0.15 }} />
+                  <Icon
+                    size={100}
+                    weight="duotone"
+                    style={{
+                      color,
+                      opacity: 0.25 + scrollProgress * 0.15,
+                      filter: isHovered ? `drop-shadow(0 0 30px ${color}40)` : "none",
+                    }}
+                  />
                   <div
-                    className="absolute inset-0 blur-[40px]"
-                    style={{ backgroundColor: color, opacity: scrollProgress * 0.15 }}
+                    className="absolute inset-0 blur-[40px] transition-opacity duration-500"
+                    style={{ backgroundColor: color, opacity: isHovered ? 0.2 : scrollProgress * 0.15 }}
                   />
                 </div>
               </div>
@@ -214,6 +231,16 @@ function ServiceSection({
               >
                 <div className="text-3xl font-bold" style={{ color: "white" }}>0{index + 1}</div>
               </div>
+
+              {/* Hover border glow */}
+              <div
+                className="absolute inset-0 rounded-2xl transition-opacity duration-500"
+                style={{
+                  border: `1px solid ${color}30`,
+                  opacity: isHovered ? 1 : 0,
+                  boxShadow: `inset 0 0 30px ${color}10`,
+                }}
+              />
             </div>
           </div>
 
@@ -229,8 +256,12 @@ function ServiceSection({
             {/* Icon + Title */}
             <div className="flex items-center gap-4 mb-6">
               <div
-                className="w-12 h-12 rounded-xl flex items-center justify-center"
-                style={{ backgroundColor: `${color}15`, color }}
+                className="w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300"
+                style={{
+                  backgroundColor: isHovered ? `${color}25` : `${color}15`,
+                  color,
+                  transform: isHovered ? "scale(1.1)" : "scale(1)",
+                }}
               >
                 <Icon size={24} weight="duotone" />
               </div>
@@ -249,7 +280,7 @@ function ServiceSection({
               {features[tKey].map((feature, i) => (
                 <div
                   key={feature}
-                  className="flex items-center gap-3 px-4 py-3 rounded-lg"
+                  className="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 hover:translate-x-1"
                   style={{
                     backgroundColor: "rgba(255,255,255,0.02)",
                     border: "1px solid rgba(255,255,255,0.05)",
@@ -281,7 +312,7 @@ function ServiceSection({
             >
               <Link
                 href="/contact"
-                className="group inline-flex items-center gap-3 px-7 py-3.5 rounded-lg text-sm font-bold transition-all duration-300 hover:shadow-[0_12px_40px_rgba(200,50,70,0.2)]"
+                className="group inline-flex items-center gap-3 px-7 py-3.5 rounded-lg text-sm font-bold transition-all duration-300 hover:shadow-[0_12px_40px_rgba(200,50,70,0.2)] hover:scale-105"
                 style={{ backgroundColor: color, color: "white" }}
               >
                 开始项目
