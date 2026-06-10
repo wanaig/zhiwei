@@ -1,0 +1,158 @@
+{
+  "metadata": {
+    "title": "Zhiwei - Professional Software Development Studio",
+    "description": "Zhiwei is a boutique studio specializing in web development, app development, system development, mini-programs, AI/data, and e-commerce solutions"
+  },
+  "nav": {
+    "home": "Home",
+    "portfolio": "Portfolio",
+    "services": "Services",
+    "about": "About",
+    "blog": "Blog",
+    "contact": "Contact"
+  },
+  "hero": {
+    "greeting": "STUDIO",
+    "title": "Zhiwei",
+    "subtitle": "Craft Digital, Ship Craft",
+    "description": "Small team, meticulous craft. Web, apps & systems.",
+    "cta": {
+      "work": "View Our Work",
+      "contact": "Get in Touch"
+    }
+  },
+  "services": {
+    "title": "Our Services",
+    "subtitle": "End-to-end technical solutions from concept to launch",
+    "items": {
+      "website": {
+        "title": "Web Development",
+        "description": "Corporate websites, landing pages, web apps with responsive design and optimal performance"
+      },
+      "app": {
+        "title": "App Development",
+        "description": "iOS and Android native apps, cross-platform solutions with smooth user experiences"
+      },
+      "system": {
+        "title": "System Development",
+        "description": "Management systems, admin platforms, SaaS products - efficient and stable enterprise solutions"
+      },
+      "miniapp": {
+        "title": "Mini Programs",
+        "description": "WeChat and Alipay mini programs, lightweight solutions to reach users quickly"
+      },
+      "ai": {
+        "title": "AI / Data",
+        "description": "Intelligent automation, data analytics, machine learning integration for data-driven decisions"
+      },
+      "ecommerce": {
+        "title": "E-commerce",
+        "description": "Online stores, payment integration, inventory management - complete e-commerce solutions"
+      }
+    }
+  },
+  "portfolio": {
+    "title": "Selected Work",
+    "subtitle": "Every project is a fusion of technology and creativity",
+    "viewAll": "View All Projects",
+    "viewProject": "View Project",
+    "filters": {
+      "all": "All",
+      "website": "Web",
+      "app": "App",
+      "system": "System",
+      "miniapp": "Mini Program",
+      "ai": "AI",
+      "ecommerce": "E-commerce"
+    }
+  },
+  "about": {
+    "title": "About Us",
+    "subtitle": "Small team, big possibilities",
+    "story": {
+      "title": "Our Story",
+      "content": "Zhiwei was founded with a simple mission - to help anyone with an idea bring their digital dreams to life. We believe great software doesn't require a massive team, just a passion for technology and attention to detail."
+    },
+    "values": {
+      "title": "Our Values",
+      "quality": {
+        "title": "Quality First",
+        "description": "Every line of code is carefully crafted, pursuing卓越 user experiences"
+      },
+      "innovation": {
+        "title": "Continuous Innovation",
+        "description": "Staying at the technology frontier, providing the most suitable solutions"
+      },
+      "partnership": {
+        "title": "Partnership",
+        "description": "Not just delivering projects, but building long-term technical partnerships"
+      }
+    },
+    "team": {
+      "title": "Core Team",
+      "members": {
+        "founder": {
+          "name": "Founder",
+          "role": "Full-stack Dev / Project Lead",
+          "bio": "10+ years of development experience, excelling in architecture design and tech selection"
+        },
+        "designer": {
+          "name": "Designer",
+          "role": "UI/UX Design",
+          "bio": "Focused on user experience, making complex features simple and intuitive"
+        },
+        "developer": {
+          "name": "Developer",
+          "role": "Frontend/Backend Dev",
+          "bio": "Passionate about coding, pursuing elegant code and极致 performance"
+        }
+      }
+    }
+  },
+  "blog": {
+    "title": "Tech Blog",
+    "subtitle": "Sharing insights, documenting our journey",
+    "readMore": "Read More",
+    "backToList": "Back to Articles"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Have a project in mind? Let's talk",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "company": "Company (optional)",
+      "service": "Service Needed",
+      "budget": "Budget Range",
+      "message": "Project Description",
+      "submit": "Send Message",
+      "sending": "Sending...",
+      "success": "Message sent! We'll get back to you soon.",
+      "error": "Failed to send. Please try again."
+    },
+    "info": {
+      "title": "Contact Info",
+      "email": "hello@zhiwei.studio",
+      "wechat": "zhiwei_studio",
+      "github": "github.com/zhiwei",
+      "location": "China"
+    }
+  },
+  "footer": {
+    "description": "A boutique development studio focused on technical innovation",
+    "links": {
+      "services": "Services",
+      "company": "Company",
+      "resources": "Resources"
+    },
+    "copyright": "© 2024 Zhiwei. All rights reserved."
+  },
+  "common": {
+    "learnMore": "Learn More",
+    "viewAll": "View All",
+    "back": "Back",
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "retry": "Retry"
+  }
+}

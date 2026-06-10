@@ -1,0 +1,142 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  
+  --color-background: var(--bg);
+  --color-foreground: var(--ink);
+  
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+}
+
+:root {
+  /* Light Mode (Default) */
+  --bg: oklch(1.000 0.000 0);
+  --surface: oklch(0.985 0.002 355);
+  --ink: oklch(0.145 0.012 355);
+  --ink-secondary: oklch(0.450 0.015 355);
+  --primary: oklch(0.636 0.218 355);
+  --primary-hover: oklch(0.580 0.218 355);
+  --accent: oklch(0.650 0.150 250);
+  --muted: oklch(0.650 0.020 355);
+  --border: oklch(0.920 0.005 355);
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px oklch(0 0 0 / 0.05);
+  --shadow-md: 0 4px 12px oklch(0 0 0 / 0.08);
+  --shadow-lg: 0 8px 24px oklch(0 0 0 / 0.12);
+  --shadow-xl: 0 16px 48px oklch(0 0 0 / 0.16);
+  
+  /* Z-Index Scale */
+  --z-base: 0;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-modal-backdrop: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+  --z-tooltip: 600;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: oklch(0.080 0.000 0);
+    --surface: oklch(0.130 0.005 355);
+    --ink: oklch(0.950 0.005 355);
+    --ink-secondary: oklch(0.650 0.015 355);
+    --primary: oklch(0.700 0.218 355);
+    --primary-hover: oklch(0.750 0.218 355);
+    --accent: oklch(0.750 0.150 250);
+    --muted: oklch(0.550 0.020 355);
+    --border: oklch(0.220 0.010 355);
+  }
+}
+
+/* Base Styles */
+body {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Smooth scroll - handled by Next.js data-scroll-behavior attribute */
+html[data-scroll-behavior="smooth"] {
+  scroll-behavior: smooth;
+}
+
+/* Selection color */
+::selection {
+  background-color: var(--primary);
+  color: white;
+}
+
+/* Focus styles */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Typography utilities */
+.text-balance {
+  text-wrap: balance;
+}
+
+.text-pretty {
+  text-wrap: pretty;
+}
+
+/* Marquee animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-33.333%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+/* Header scrolled state */
+.header-scrolled nav > div {
+  background-color: color-mix(in srgb, var(--bg) 95%, transparent) !important;
+  box-shadow: 0 4px 24px oklch(0 0 0 / 0.08) !important;
+}
+
+/* Scroll dot animation */
+@keyframes scrollDot {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(8px); opacity: 0.3; }
+}
+
+.animate-scroll-dot {
+  animation: scrollDot 2s ease-in-out infinite;
+}
+
+/* Scroll line animation */
+@keyframes scrollLine {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(350%); }
+}
+
+.animate-scroll-line {
+  animation: scrollLine 2s ease-in-out infinite;
+}

@@ -1,0 +1,158 @@
+{
+  "metadata": {
+    "title": "知微 | Zhiwei - 专业软件开发工作室",
+    "description": "知微是一家专注于网站开发、App开发、系统开发、小程序、AI/数据和电商开发的专业工作室"
+  },
+  "nav": {
+    "home": "首页",
+    "portfolio": "作品集",
+    "services": "服务",
+    "about": "关于我们",
+    "blog": "博客",
+    "contact": "联系我们"
+  },
+  "hero": {
+    "greeting": "STUDIO",
+    "title": "知微",
+    "subtitle": "Craft Digital, Ship Craft",
+    "description": "小团队，精工细作。专注网站、应用与系统开发。",
+    "cta": {
+      "work": "查看作品",
+      "contact": "联系我们"
+    }
+  },
+  "services": {
+    "title": "我们的服务",
+    "subtitle": "从构想到上线，提供全方位的技术解决方案",
+    "items": {
+      "website": {
+        "title": "网站开发",
+        "description": "企业官网、营销落地页、Web应用，响应式设计，极致性能"
+      },
+      "app": {
+        "title": "App开发",
+        "description": "iOS、Android原生应用，跨平台方案，流畅用户体验"
+      },
+      "system": {
+        "title": "系统开发",
+        "description": "管理系统、后台平台、SaaS产品，高效稳定的企业级方案"
+      },
+      "miniapp": {
+        "title": "小程序",
+        "description": "微信、支付宝小程序，轻量级解决方案，快速触达用户"
+      },
+      "ai": {
+        "title": "AI / 数据",
+        "description": "智能自动化、数据分析、机器学习集成，数据驱动决策"
+      },
+      "ecommerce": {
+        "title": "电商开发",
+        "description": "在线商城、支付集成、库存管理，完整的电商解决方案"
+      }
+    }
+  },
+  "portfolio": {
+    "title": "精选作品",
+    "subtitle": "每一个项目，都是技术与创意的结合",
+    "viewAll": "查看全部作品",
+    "viewProject": "查看项目",
+    "filters": {
+      "all": "全部",
+      "website": "网站",
+      "app": "App",
+      "system": "系统",
+      "miniapp": "小程序",
+      "ai": "AI",
+      "ecommerce": "电商"
+    }
+  },
+  "about": {
+    "title": "关于我们",
+    "subtitle": "小团队，大可能",
+    "story": {
+      "title": "我们的故事",
+      "content": "知微成立于创业初心——用技术帮助每一个有想法的人实现数字梦想。我们相信，好的软件不需要庞大的团队，而是需要对技术的热爱和对细节的执着。"
+    },
+    "values": {
+      "title": "我们的价值观",
+      "quality": {
+        "title": "品质至上",
+        "description": "每一行代码都经过精心打磨，追求卓越的用户体验"
+      },
+      "innovation": {
+        "title": "持续创新",
+        "description": "紧跟技术前沿，为客户提供最合适的解决方案"
+      },
+      "partnership": {
+        "title": "伙伴关系",
+        "description": "不只是交付项目，更是建立长期的技术合作伙伴关系"
+      }
+    },
+    "team": {
+      "title": "核心团队",
+      "members": {
+        "founder": {
+          "name": "创始人",
+          "role": "全栈开发 / 项目负责人",
+          "bio": "10年+开发经验，擅长架构设计和技术选型"
+        },
+        "designer": {
+          "name": "设计师",
+          "role": "UI/UX设计",
+          "bio": "专注用户体验，让复杂的功能变得简单易用"
+        },
+        "developer": {
+          "name": "开发者",
+          "role": "前端/后端开发",
+          "bio": "热爱编码，追求代码的优雅和性能的极致"
+        }
+      }
+    }
+  },
+  "blog": {
+    "title": "技术博客",
+    "subtitle": "分享技术见解，记录成长足迹",
+    "readMore": "阅读全文",
+    "backToList": "返回文章列表"
+  },
+  "contact": {
+    "title": "联系我们",
+    "subtitle": "有项目想法？让我们聊聊",
+    "form": {
+      "name": "姓名",
+      "email": "邮箱",
+      "company": "公司名称（选填）",
+      "service": "需要的服务",
+      "budget": "预算范围",
+      "message": "项目描述",
+      "submit": "发送消息",
+      "sending": "发送中...",
+      "success": "消息已发送，我们会尽快回复您！",
+      "error": "发送失败，请稍后重试"
+    },
+    "info": {
+      "title": "联系方式",
+      "email": "hello@zhiwei.studio",
+      "wechat": "zhiwei_studio",
+      "github": "github.com/zhiwei",
+      "location": "中国"
+    }
+  },
+  "footer": {
+    "description": "专注技术创新的小型开发工作室",
+    "links": {
+      "services": "服务",
+      "company": "公司",
+      "resources": "资源"
+    },
+    "copyright": "© 2024 知微 Zhiwei. All rights reserved."
+  },
+  "common": {
+    "learnMore": "了解更多",
+    "viewAll": "查看全部",
+    "back": "返回",
+    "loading": "加载中...",
+    "error": "出错了",
+    "retry": "重试"
+  }
+}
