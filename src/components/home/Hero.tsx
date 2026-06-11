@@ -195,10 +195,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section
-      className="relative h-[100dvh] min-h-[700px] overflow-hidden"
-      style={{ backgroundColor: "rgb(6, 6, 10)" }}
-    >
+    <section className="relative h-[100dvh] min-h-[700px] overflow-hidden" style={{ backgroundColor: "rgb(6, 6, 10)" }}>
       <canvas ref={canvasRef} className="absolute inset-0 z-10" />
 
       {/* Content overlay */}
@@ -209,21 +206,120 @@ export default function Hero() {
             <div>
               {/* Logo */}
               <div className="mb-8">
-                <div
-                  className="text-8xl md:text-9xl font-black tracking-tighter"
-                  style={{
-                    color: "white",
-                    textShadow: "0 0 60px rgba(200, 50, 70, 0.3)",
-                    lineHeight: 0.85,
-                  }}
-                >
-                  知微
+                {/* Decorative line */}
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="w-12 h-[2px]" style={{ backgroundColor: "rgb(200, 50, 70)" }} />
+                  <span className="text-xs font-medium tracking-[0.3em] uppercase" style={{ color: "rgb(200, 80, 100)" }}>
+                    Digital Craft Studio
+                  </span>
                 </div>
-                <div
-                  className="mt-3 text-sm tracking-[0.3em] uppercase"
-                  style={{ color: "rgba(255,255,255,0.35)" }}
-                >
-                  Digital Craft Studio
+                
+                {/* Main title with 3D effect */}
+                <div className="relative">
+                  {/* Shadow layers for 3D effect */}
+                  <div
+                    className="absolute text-8xl md:text-9xl font-black tracking-tighter"
+                    style={{
+                      color: "rgba(200, 50, 70, 0.1)",
+                      lineHeight: 0.85,
+                      transform: "translate(4px, 4px)",
+                      filter: "blur(2px)",
+                    }}
+                  >
+                    知微
+                  </div>
+                  <div
+                    className="absolute text-8xl md:text-9xl font-black tracking-tighter"
+                    style={{
+                      color: "rgba(200, 50, 70, 0.08)",
+                      lineHeight: 0.85,
+                      transform: "translate(8px, 8px)",
+                      filter: "blur(4px)",
+                    }}
+                  >
+                    知微
+                  </div>
+                  
+                  {/* Main text with split effect */}
+                  <div className="relative flex">
+                    {/* 知 character */}
+                    <div
+                      className="text-8xl md:text-9xl font-black tracking-tighter"
+                      style={{
+                        color: "white",
+                        lineHeight: 0.85,
+                        textShadow: "0 0 30px rgba(200, 50, 70, 0.5), 0 0 60px rgba(200, 50, 70, 0.3)",
+                        animation: "float-char 4s ease-in-out infinite",
+                      }}
+                    >
+                      知
+                    </div>
+                    
+                    {/* Divider line */}
+                    <div 
+                      className="w-[3px] h-16 mx-3 self-center"
+                      style={{
+                        background: "linear-gradient(to bottom, transparent, rgb(200, 50, 70), transparent)",
+                        animation: "divider-pulse 2s ease-in-out infinite",
+                      }}
+                    />
+                    
+                    {/* 微 character */}
+                    <div
+                      className="text-8xl md:text-9xl font-black tracking-tighter"
+                      style={{
+                        color: "white",
+                        lineHeight: 0.85,
+                        textShadow: "0 0 30px rgba(58, 123, 213, 0.5), 0 0 60px rgba(58, 123, 213, 0.3)",
+                        animation: "float-char 4s ease-in-out infinite 0.5s",
+                      }}
+                    >
+                      微
+                    </div>
+                  </div>
+                  
+                  {/* Decorative elements */}
+                  <div className="absolute -left-6 top-1/2 -translate-y-1/2">
+                    <div 
+                      className="w-4 h-4 rounded-full"
+                      style={{
+                        background: "radial-gradient(circle, rgba(200, 50, 70, 0.6), transparent)",
+                        animation: "pulse-glow 2s ease-in-out infinite",
+                      }}
+                    />
+                  </div>
+                  <div className="absolute -right-6 top-1/2 -translate-y-1/2">
+                    <div 
+                      className="w-4 h-4 rounded-full"
+                      style={{
+                        background: "radial-gradient(circle, rgba(58, 123, 213, 0.6), transparent)",
+                        animation: "pulse-glow 2s ease-in-out infinite 1s",
+                      }}
+                    />
+                  </div>
+                </div>
+                
+                {/* Subtitle with typing effect */}
+                <div className="mt-8 flex items-center gap-4">
+                  <div className="flex gap-1">
+                    {[...Array(3)].map((_, i) => (
+                      <div
+                        key={i}
+                        className="w-1.5 h-1.5 rounded-full"
+                        style={{
+                          backgroundColor: "rgb(200, 50, 70)",
+                          animation: `dot-bounce 1.4s ease-in-out infinite`,
+                          animationDelay: `${i * 0.2}s`,
+                        }}
+                      />
+                    ))}
+                  </div>
+                  <span 
+                    className="text-sm tracking-wider"
+                    style={{ color: "rgba(255,255,255,0.5)" }}
+                  >
+                    小团队，精工细作
+                  </span>
                 </div>
               </div>
 

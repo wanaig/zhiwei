@@ -1,4 +1,5 @@
 import "./globals.css";
+import MouseEffect from "@/components/layout/MouseEffect";
 
 export default function RootLayout({
   children,
@@ -7,7 +8,10 @@ export default function RootLayout({
 }>) {
   return (
     <html suppressHydrationWarning>
-      <body suppressHydrationWarning>{children}</body>
+      <body suppressHydrationWarning>
+        <MouseEffect />
+        {children}
+      </body>
     </html>
   );
 }

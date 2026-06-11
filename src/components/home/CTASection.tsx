@@ -1,6 +1,5 @@
 "use client";
 
-import { useRef, useState, MouseEvent } from "react";
 import { useTranslations } from "next-intl";
 import { motion, useReducedMotion } from "motion/react";
 import Link from "next/link";
@@ -9,22 +8,9 @@ import { ArrowRight } from "@phosphor-icons/react";
 export default function CTASection() {
   const t = useTranslations("hero.cta");
   const reduce = useReducedMotion();
-  const sectionRef = useRef<HTMLElement>(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-
-  const handleMouseMove = (e: MouseEvent<HTMLElement>) => {
-    if (!sectionRef.current) return;
-    const rect = sectionRef.current.getBoundingClientRect();
-    setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-  };
 
   return (
-    <section
-      ref={sectionRef}
-      className="py-24 md:py-32"
-      style={{ backgroundColor: "rgb(10, 10, 14)" }}
-      onMouseMove={handleMouseMove}
-    >
+    <section className="py-24 md:py-32" style={{ backgroundColor: "rgb(10, 10, 14)" }}>
       <div className="max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-12">
         <motion.div
           initial={reduce ? false : { opacity: 0, y: 40 }}
@@ -46,19 +32,6 @@ export default function CTASection() {
                 linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)
               `,
               backgroundSize: "60px 60px",
-            }}
-          />
-
-          {/* Mouse spotlight */}
-          <div
-            className="absolute pointer-events-none"
-            style={{
-              left: `${mousePos.x - 200}px`,
-              top: `${mousePos.y - 200}px`,
-              width: "400px",
-              height: "400px",
-              background: "radial-gradient(circle, rgba(200, 50, 70, 0.08), transparent 60%)",
-              transition: "left 0.15s, top 0.15s",
             }}
           />
 
